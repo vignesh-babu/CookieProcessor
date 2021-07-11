@@ -4,9 +4,9 @@
 
 namespace cookie
 {
-	class ILogHandler
-	{
-	public:
-		virtual bool next(CookieMetadata* metadata) = 0;
-	};
+    class ILogHandler
+    {
+    public:
+        virtual bool next(CookieMetadata** metadata) = 0;
+    };
 }

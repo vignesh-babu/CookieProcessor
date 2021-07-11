@@ -12,7 +12,7 @@ namespace cookie {
 		LogFileHandler(const std::string& logFile);
 		
 		// Inherited via ILogHandler
-		virtual bool next(CookieMetadata* metadata) override;
+		virtual bool next(CookieMetadata** metadata) override;
 		
 		~LogFileHandler();
 	

@@ -1,30 +1,40 @@
 #pragma once
 #include <unordered_map>
-#include "boost/date_time/gregorian/gregorian.hpp" 
 
-#include "LogFileHandler.h"
+#include "boost/container_hash/hash.hpp"
+
+#include "ILogHandler.h"
+
 
 namespace cookie
 {
-	struct CookieInfo
-	{
-		CookieMetadata m_metadata;
-		int m_occurences;
+    struct DateHash
+    {
+        size_t operator()(boost::gregorian::date const& date) const
+        {
+            return boost::hash_value(date.julian_day());
+        }
+    };
 
-		std::string ToString();
-	};
+    struct CookieInfo
+    {
+        CookieMetadata m_metadata;
+        int m_occurences;
 
-	class CookieProcessor
-	{
-	public:
-		CookieProcessor(ILogHandler* logHandler);
-		void process();
-		std::string GetActiveCookie(const std::string& date);
+        std::string ToString();
+    };
 
-		std::string ToString();
+    class CookieProcessor
+    {
+    public:
+        CookieProcessor(ILogHandler* logHandler);
+        void process();
+        std::string GetActiveCookie(const std::string& date);
 
-	private:
-		std::unique_ptr<ILogHandler> m_logHandler;
-		std::unordered_map<boost::gregorian::date, std::vector<CookieInfo>> m_DateToCookieInfoMap;
-	};
+        std::string ToString();
+
+    private:
+        std::unique_ptr<ILogHandler> m_logHandler;
+        std::unordered_map<boost::gregorian::date, std::vector<CookieInfo>, DateHash> m_DateToCookieInfoMap;
+    };
 }

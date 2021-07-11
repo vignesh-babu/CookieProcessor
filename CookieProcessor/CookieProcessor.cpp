@@ -1,5 +1,5 @@
 #include "CookieProcessor.h"
-#include "CookieParseHelper.hpp"
+#include "CookieParseHelper.h"
 
 namespace cookie {
 
@@ -10,14 +10,14 @@ namespace cookie {
     void CookieProcessor::process()
     {
         CookieMetadata* cMd;
-        while (m_logHandler->next(cMd))
+        while (m_logHandler->next(&cMd))
         {
             if (m_DateToCookieInfoMap.find(cMd->GetAccessDate()) != m_DateToCookieInfoMap.end())
             {
                 auto& cookieOccurences = m_DateToCookieInfoMap[cMd->GetAccessDate()];
-                auto iter = std::find_if(cookieOccurences.begin(), cookieOccurences.end(), [&cMd](CookieMetadata &cMd1)
+                auto iter = std::find_if(cookieOccurences.begin(), cookieOccurences.end(), [&cMd](CookieInfo& cMd1)
                     {
-                        return cMd->GetId() == cMd1.GetId();
+                        return cMd->GetId() == cMd1.m_metadata.GetId();
                     });
                 if (iter != cookieOccurences.end())
                 {
@@ -38,12 +38,12 @@ namespace cookie {
     std::string CookieProcessor::GetActiveCookie(const std::string& date)
     {
         auto iter = m_DateToCookieInfoMap.find(parse_helper::GetDate(date));
-        
+
         if (iter != m_DateToCookieInfoMap.end())
         {
             auto info = std::max_element(iter->second.begin(), iter->second.end(), [](const CookieInfo& ci1, const CookieInfo& ci2) {
                 return ci1.m_occurences < ci2.m_occurences;
-            });
+                });
             if (info != iter->second.end())
             {
                 return info->m_metadata.GetId();
@@ -58,7 +58,7 @@ namespace cookie {
             return "Date doesn't exist";
         }
     }
-    
+
     std::string CookieProcessor::ToString()
     {
         std::string cookieProcessorState;
@@ -67,7 +67,7 @@ namespace cookie {
         {
             cookieProcessorState.append("[")
                 .append("Date : ").append(boost::gregorian::to_iso_extended_string(dateToCookies.first)).append(", ");
-            for (auto &info : dateToCookies.second)
+            for (auto& info : dateToCookies.second)
             {
                 cookieProcessorState.append("\n").append(info.ToString());
             }

@@ -142,7 +142,7 @@
     <ClCompile Include="CookieMetadata.cpp" />
     <ClCompile Include="CookieMetadata.h" />
     <ClCompile Include="CookieMetadataBuilder.cpp" />
-    <ClCompile Include="CookieParseHelper.hpp" />
+    <ClCompile Include="CookieParseHelper.h" />
     <ClCompile Include="CookieProcessor.cpp" />
     <ClCompile Include="CookieProcessor.h" />
     <ClCompile Include="LogFileHandler.cpp" />
@@ -152,6 +152,9 @@
     <ClInclude Include="CookieMetadataBuilder.h" />
     <ClInclude Include="ILogHandler.h" />
     <ClInclude Include="LogFileHandler.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="test_log_file.csv" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

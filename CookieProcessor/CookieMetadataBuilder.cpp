@@ -1,24 +1,32 @@
 #include "CookieMetadataBuilder.h"
-#include "CookieParseHelper.hpp"
+#include "CookieParseHelper.h"
 
 namespace cookie {
-	CookieMetadataBuilder::CookieMetadataBuilder()
-	{
-		m_cookieMetadata = new CookieMetadata();
-	}
+    CookieMetadataBuilder::CookieMetadataBuilder()
+    {
+        m_cookieMetadata = new CookieMetadata();
+    }
 
-	CookieMetadataBuilder CookieMetadataBuilder::SetIdentifier(const std::string& cookieId)
-	{
-		m_cookieMetadata->SetId(cookieId);
-	}
-	
-	CookieMetadataBuilder CookieMetadataBuilder::SetAccessTime(const std::string& time)
-	{
-		m_cookieMetadata->SetAccessTime(parse_helper::GetAccessTime(time));
-	}
+    CookieMetadataBuilder CookieMetadataBuilder::SetIdentifier(const std::string& cookieId)
+    {
+        m_cookieMetadata->SetId(cookieId);
+        return *this;
+    }
 
-	CookieMetadata* CookieMetadataBuilder::GetCookie()
-	{
-		return m_cookieMetadata;
-	}
+    CookieMetadataBuilder CookieMetadataBuilder::SetAccessTime(const std::string& time)
+    {
+        m_cookieMetadata->SetAccessTime(parse_helper::GetAccessTime(time));
+        return *this;
+    }
+
+    CookieMetadata* CookieMetadataBuilder::GetCookie()
+    {
+        CookieMetadata* result = this->m_cookieMetadata;
+        this->m_cookieMetadata = nullptr;
+        return result;
+    }
+    CookieMetadataBuilder::~CookieMetadataBuilder()
+    {
+        m_cookieMetadata = nullptr;
+    }
 }

@@ -5,15 +5,16 @@
 
 namespace cookie
 {
-	class CookieMetadataBuilder
-	{
-	public:
-		CookieMetadataBuilder();
-		CookieMetadataBuilder SetIdentifier(const std::string& cookieId);
-		CookieMetadataBuilder SetAccessTime(const std::string& time);
-		CookieMetadata* GetCookie();
+    class CookieMetadataBuilder
+    {
+    public:
+        CookieMetadataBuilder();
+        CookieMetadataBuilder SetIdentifier(const std::string& cookieId);
+        CookieMetadataBuilder SetAccessTime(const std::string& time);
+        CookieMetadata* GetCookie();
+        ~CookieMetadataBuilder();
 
-	private:
-		CookieMetadata* m_cookieMetadata;
-	};
+    private:
+        CookieMetadata* m_cookieMetadata;
+    };
 }

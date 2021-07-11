@@ -139,7 +139,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CookieProcessor.cpp" />
+    <ClCompile Include="CookieMetadata.cpp" />
+    <ClCompile Include="CookieMetadata.h" />
+    <ClCompile Include="CookieMetadataBuilder.cpp" />
+    <ClCompile Include="CookieParseHelper.cpp" />
+    <ClCompile Include="CookieProcessor.h" />
+    <ClCompile Include="LogFileHandler.cpp" />
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CookieMetadataBuilder.h" />
+    <ClInclude Include="ILogHandler.h" />
+    <ClInclude Include="LogFileHandler.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

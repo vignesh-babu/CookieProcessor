@@ -17,6 +17,11 @@ namespace cookie
 		return m_identifier;
 	}
 
+	boost::gregorian::date CookieMetadata::GetAccessDate()
+	{
+		return m_accessTime.date();
+	}
+
 	std::string CookieMetadata::ToString()
 	{
 		return std::string("[Cookie : Id - ").append(m_identifier)

@@ -14,5 +14,10 @@ namespace parse_helper {
 		//std::cout << "Time : " << boost::posix_time::to_iso_extended_string(cookieAccessTime) << std::endl;
 		return cookieAccessTime;
 	}
+
+	boost::gregorian::date GetDate(const std::string& dateStr)
+	{
+		return boost::gregorian::from_string(dateStr);
+	}
 }
 }

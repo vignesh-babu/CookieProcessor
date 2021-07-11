@@ -8,12 +8,12 @@ namespace cookie
 	class CookieMetadataBuilder
 	{
 	public:
-		CookieMetadataBuilder() = default;
-		void SetIdentifier(const std::string& cookieId);
-		void SetAccessTime(const std::string& time);
-		CookieMetadata GetCookie();
+		CookieMetadataBuilder();
+		CookieMetadataBuilder SetIdentifier(const std::string& cookieId);
+		CookieMetadataBuilder SetAccessTime(const std::string& time);
+		CookieMetadata* GetCookie();
 
 	private:
-		CookieMetadata m_cookieMetadata;
+		CookieMetadata* m_cookieMetadata;
 	};
 }

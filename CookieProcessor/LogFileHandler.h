@@ -10,7 +10,10 @@ namespace cookie {
 	{
 	public:
 		LogFileHandler(const std::string& logFile);
-		bool next(CookieMetadata &metadata) override;
+		
+		// Inherited via ILogHandler
+		virtual bool next(CookieMetadata* metadata) override;
+		
 		~LogFileHandler();
 	
 	private:

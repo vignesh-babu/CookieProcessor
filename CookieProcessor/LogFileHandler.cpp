@@ -1,4 +1,5 @@
 #include "LogFileHandler.h"
+#include "CookieMetadataBuilder.h"
 
 namespace cookie {
 
@@ -11,12 +12,19 @@ namespace cookie {
 		}
 	}
 
-	bool LogFileHandler::next(CookieMetadata& metadata)
-	{
+	bool LogFileHandler::next(CookieMetadata* metadata)
+	{		
 		std::string currLine;
 		if (std::getline(m_logFileHandle, currLine))
 		{
-
+			std::vector<std::string> details;
+			boost::split(details, currLine, boost::is_any_of(","));
+			if (details.size() != 2)
+			{
+				throw std::length_error(std::string("Cannot parse line : " + currLine));
+			}
+			
+			metadata = CookieMetadataBuilder().SetIdentifier(details[0]).SetAccessTime(details[1]).GetCookie();
 			return true;
 		}
 		else
@@ -28,5 +36,9 @@ namespace cookie {
 	LogFileHandler::~LogFileHandler()
 	{
 		m_logFileHandle.close();
+	}
+	bool LogFileHandler::next(CookieMetadata* metadata)
+	{
+		return false;
 	}
 }

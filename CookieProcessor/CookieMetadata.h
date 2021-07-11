@@ -8,7 +8,10 @@ namespace cookie
 	public:
 		void SetId(std::string id);
 		void SetAccessTime(boost::posix_time::ptime accessTime);
+		
 		std::string GetId();
+		boost::gregorian::date GetAccessDate();
+		
 		std::string ToString();
 
 	private:

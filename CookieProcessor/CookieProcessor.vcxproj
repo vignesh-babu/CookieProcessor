@@ -142,7 +142,8 @@
     <ClCompile Include="CookieMetadata.cpp" />
     <ClCompile Include="CookieMetadata.h" />
     <ClCompile Include="CookieMetadataBuilder.cpp" />
-    <ClCompile Include="CookieParseHelper.cpp" />
+    <ClCompile Include="CookieParseHelper.hpp" />
+    <ClCompile Include="CookieProcessor.cpp" />
     <ClCompile Include="CookieProcessor.h" />
     <ClCompile Include="LogFileHandler.cpp" />
     <ClCompile Include="main.cpp" />

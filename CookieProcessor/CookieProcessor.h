@@ -9,18 +9,22 @@ namespace cookie
 	struct CookieInfo
 	{
 		CookieMetadata m_metadata;
-		int occurences;
+		int m_occurences;
+
+		std::string ToString();
 	};
 
 	class CookieProcessor
 	{
 	public:
-		CookieProcessor(std::string logFile);
-		std::string GetActiveCookie(std::string date);
+		CookieProcessor(ILogHandler* logHandler);
+		void process();
+		std::string GetActiveCookie(const std::string& date);
+
+		std::string ToString();
 
 	private:
-		LogFileHandler m_logFileHandler;
+		std::unique_ptr<ILogHandler> m_logHandler;
 		std::unordered_map<boost::gregorian::date, std::vector<CookieInfo>> m_DateToCookieInfoMap;
-
 	};
 }

@@ -24,7 +24,7 @@
     <ClCompile Include="CookieMetadata.h">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CookieParseHelper.cpp">
+    <ClCompile Include="CookieParseHelper.hpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CookieMetadata.cpp">
@@ -34,6 +34,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LogFileHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CookieProcessor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

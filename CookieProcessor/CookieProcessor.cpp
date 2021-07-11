@@ -9,6 +9,7 @@ namespace cookie {
 
     void CookieProcessor::process()
     {
+        BOOST_LOG_TRIVIAL(info) << "Starting to process logs from log handler";
         CookieMetadata* cMd;
         while (m_logHandler->next(&cMd))
         {
@@ -33,10 +34,14 @@ namespace cookie {
                 m_DateToCookieInfoMap.insert({ cMd->GetAccessDate(), { {*cMd, 1} } });
             }
         }
+        BOOST_LOG_TRIVIAL(info) << "Processed all lines from log handler";
+        BOOST_LOG_TRIVIAL(debug) << ToString();
     }
 
     std::string CookieProcessor::GetActiveCookie(const std::string& date)
     {
+        BOOST_LOG_TRIVIAL(info) << "checking for date" << date;
+
         auto iter = m_DateToCookieInfoMap.find(parse_helper::GetDate(date));
 
         if (iter != m_DateToCookieInfoMap.end())
@@ -50,12 +55,14 @@ namespace cookie {
             }
             else
             {
-                return "No Active Cookies present for the give date";
+                BOOST_LOG_TRIVIAL(warning) << "No Active Cookies present for the give date : " << date;
+                return "Not Found";
             }
         }
         else
         {
-            return "Date doesn't exist";
+            BOOST_LOG_TRIVIAL(warning) << "No Entry founf for date : " << date;
+            return "Not Found";
         }
     }
 

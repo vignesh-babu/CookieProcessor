@@ -5,6 +5,11 @@
 
 #include "boost/program_options.hpp"
 #include "boost/filesystem/path.hpp"
+#include "boost/log/core.hpp"
+#include "boost/log/trivial.hpp"
+#include "boost/log/expressions.hpp"
+#include "boost/log/utility/setup/file.hpp"
+#include "boost/log/utility/setup/common_attributes.hpp"
 
 #include "LogFileHandler.h"
 #include "CookieProcessor.h"
@@ -15,8 +20,24 @@ void to_cout(const std::vector<std::string>& v)
         std::cout, "\n"});
 }
 
+void init_logging()
+{
+    boost::log::register_simple_formatter_factory<boost::log::trivial::severity_level, char>("Severity");
+
+    boost::log::add_file_log(
+        boost::log::keywords::file_name = "cookie_processor_all.log",
+        boost::log::keywords::format = "[%TimeStamp%] [%Severity%] [%ThreadID%] %Message%"
+    );
+
+    boost::log::core::get()->set_filter(boost::log::trivial::severity >= boost::log::trivial::debug);
+    boost::log::add_common_attributes();
+}
+
 int main(int argc, const char* argv[])
 {
+    // initialize logging
+    init_logging();
+
     // parse cmdline args
     std::string logFile, date;
 
@@ -51,19 +72,19 @@ int main(int argc, const char* argv[])
     }
     catch (const boost::program_options::error& ex)
     {
-        std::cerr << ex.what() << '\n';
+        BOOST_LOG_TRIVIAL(fatal) << "Error on parsing cmd args : " << ex.what();
     }
 
     if (logFile.empty() || date.empty())
     {
-        std::cerr << "invalid args" << std::endl;
+        BOOST_LOG_TRIVIAL(error) << "Error on parsing cmd args : logFile name or date params are empty";
         exit(0);
     }
+
     cookie::ILogHandler* logHandler = new cookie::LogFileHandler(logFile);
 
     cookie::CookieProcessor processor(logHandler);
 
     processor.process();
-    std::cout << processor.ToString() << std::endl;
     std::cout << processor.GetActiveCookie(date) << std::endl;
 }

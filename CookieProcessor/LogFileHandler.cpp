@@ -1,4 +1,5 @@
 #include "boost/algorithm/string.hpp"
+#include "boost/log/trivial.hpp"
 
 #include "LogFileHandler.h"
 #include "CookieMetadataBuilder.h"
@@ -10,6 +11,7 @@ namespace cookie {
     {
         if (!m_logFileHandle.good())
         {
+            BOOST_LOG_TRIVIAL(error) << "Cannot open log file : " << logFile;
             throw std::invalid_argument("Cannot open file : " + logFile);
         }
         // skip first line
@@ -26,6 +28,7 @@ namespace cookie {
             boost::split(details, currLine, boost::is_any_of(","));
             if (details.size() != 2)
             {
+                BOOST_LOG_TRIVIAL(error) << "error encountered while parsing line : " << currLine;
                 throw std::length_error(std::string("Cannot parse line : " + currLine));
             }
 

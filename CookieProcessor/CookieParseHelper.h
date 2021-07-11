@@ -3,6 +3,7 @@
 
 #include "boost/date_time/gregorian/gregorian.hpp"
 #include "boost/date_time/posix_time/posix_time.hpp"
+#include "boost/log/trivial.hpp"
 
 namespace cookie {
     namespace parse_helper {
@@ -13,13 +14,15 @@ namespace cookie {
             auto accessTimeStrFormated = accessTimeStr.substr(0, accessTimeStr.size() - 6);
 
             boost::posix_time::ptime cookieAccessTime = boost::posix_time::from_iso_extended_string(accessTimeStrFormated);
-            // TODO: log it
+            BOOST_LOG_TRIVIAL(debug) << "parsing string - " << accessTimeStr << " as : " << boost::posix_time::to_iso_extended_string(cookieAccessTime);
             return cookieAccessTime;
         }
 
         inline boost::gregorian::date GetDate(const std::string& dateStr)
         {
-            return boost::gregorian::from_string(dateStr);
+            boost::gregorian::date cookieAccessDate = boost::gregorian::from_string(dateStr);
+            BOOST_LOG_TRIVIAL(debug) << "parsing string - " << dateStr << " as : " << boost::gregorian::to_iso_extended_string(cookieAccessDate);
+            return cookieAccessDate;
         }
     }
 }

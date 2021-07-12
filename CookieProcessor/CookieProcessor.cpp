@@ -3,8 +3,8 @@
 
 namespace cookie {
 
-    CookieProcessor::CookieProcessor(ILogHandler* logHandler) :
-        m_logHandler(std::unique_ptr<ILogHandler>(logHandler))
+    CookieProcessor::CookieProcessor(std::shared_ptr<cookie::ILogHandler>& logHandler) :
+        m_logHandler(logHandler)
     {}
 
     void CookieProcessor::process()
@@ -33,12 +33,13 @@ namespace cookie {
             {
                 m_DateToCookieInfoMap.insert({ cMd->GetAccessDate(), { {*cMd, 1} } });
             }
+            delete cMd;
         }
         BOOST_LOG_TRIVIAL(info) << "Processed all lines from log handler";
         BOOST_LOG_TRIVIAL(debug) << ToString();
     }
 
-    std::string CookieProcessor::GetActiveCookie(const std::string& date)
+    std::list<std::string> CookieProcessor::GetActiveCookie(const std::string& date)
     {
         BOOST_LOG_TRIVIAL(info) << "checking for date" << date;
 
@@ -51,18 +52,25 @@ namespace cookie {
                 });
             if (info != iter->second.end())
             {
-                return info->m_metadata.GetId();
+                std::list<std::string> result;
+                std::for_each(iter->second.begin(), iter->second.end(), [&result, &info](CookieInfo& ci1) {
+                    if (ci1.m_occurences == info->m_occurences)
+                    {
+                        result.push_back(ci1.m_metadata.GetId());
+                    }
+                });
+                return result;
             }
             else
             {
                 BOOST_LOG_TRIVIAL(warning) << "No Active Cookies present for the give date : " << date;
-                return "Not Found";
+                return std::list <std::string>({ "Not Found" });
             }
         }
         else
         {
             BOOST_LOG_TRIVIAL(warning) << "No Entry founf for date : " << date;
-            return "Not Found";
+            return std::list <std::string>({ "Not Found" });
         }
     }
 

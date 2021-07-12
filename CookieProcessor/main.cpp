@@ -81,10 +81,15 @@ int main(int argc, const char* argv[])
         exit(0);
     }
 
-    cookie::ILogHandler* logHandler = new cookie::LogFileHandler(logFile);
+    std::shared_ptr<cookie::ILogHandler> logHandler = std::make_shared<cookie::LogFileHandler>(logFile);
 
     cookie::CookieProcessor processor(logHandler);
 
     processor.process();
-    std::cout << processor.GetActiveCookie(date) << std::endl;
+    auto result = processor.GetActiveCookie(date);
+    
+    for (auto& cookie : result)
+    {
+        std::cout << cookie << std::endl;
+    }
 }

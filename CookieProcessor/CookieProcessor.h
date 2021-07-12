@@ -27,14 +27,14 @@ namespace cookie
     class CookieProcessor
     {
     public:
-        CookieProcessor(ILogHandler* logHandler);
+        CookieProcessor(std::shared_ptr<cookie::ILogHandler>& logHandler);
         void process();
-        std::string GetActiveCookie(const std::string& date);
+        std::list<std::string> GetActiveCookie(const std::string& date);
 
         std::string ToString();
 
     private:
-        std::unique_ptr<ILogHandler> m_logHandler;
+        std::shared_ptr<cookie::ILogHandler>  m_logHandler;
         std::unordered_map<boost::gregorian::date, std::vector<CookieInfo>, DateHash> m_DateToCookieInfoMap;
     };
 }

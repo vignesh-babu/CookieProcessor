@@ -13,18 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Test Files">
+      <UniqueIdentifier>{e32ad8ca-db31-43ad-b039-dd50733efaf1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CookieProcessor.h">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CookieMetadata.h">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CookieParseHelper.h">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CookieMetadata.cpp">
@@ -39,21 +33,50 @@
     <ClCompile Include="CookieProcessor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CookieMetadata.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CookieParseHelper.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CookieProcessor.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CookieProcessorTest.cpp">
+      <Filter>Test Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LogListHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestJsonParser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CookieMetadataBuilder.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="LogFileHandler.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="ILogHandler.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LogFileHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LogListHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TestJsonParser.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="test_log_file.csv">
       <Filter>Resource Files</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TestCaseData.json">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

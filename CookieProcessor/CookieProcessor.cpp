@@ -9,7 +9,7 @@ namespace cookie {
 
     void CookieProcessor::process()
     {
-        BOOST_LOG_TRIVIAL(info) << "Starting to process logs from log handler";
+        BOOST_LOG_TRIVIAL(debug) << "Starting to process logs from log handler";
         CookieMetadata* cMd;
         while (m_logHandler->next(&cMd))
         {
@@ -35,13 +35,13 @@ namespace cookie {
             }
             delete cMd;
         }
-        BOOST_LOG_TRIVIAL(info) << "Processed all lines from log handler";
+        BOOST_LOG_TRIVIAL(info) << "Processed all lines from log handler. Unique Date Count - " << m_DateToCookieInfoMap.size();
         BOOST_LOG_TRIVIAL(debug) << ToString();
     }
 
     std::list<std::string> CookieProcessor::GetActiveCookie(const std::string& date)
     {
-        BOOST_LOG_TRIVIAL(info) << "checking for date" << date;
+        BOOST_LOG_TRIVIAL(info) << "checking for date - " << date;
 
         auto iter = m_DateToCookieInfoMap.find(parse_helper::GetDate(date));
 
@@ -69,7 +69,7 @@ namespace cookie {
         }
         else
         {
-            BOOST_LOG_TRIVIAL(warning) << "No Entry founf for date : " << date;
+            BOOST_LOG_TRIVIAL(warning) << "No Entry found for date : " << date;
             return std::list <std::string>({ "Not Found" });
         }
     }
@@ -77,16 +77,16 @@ namespace cookie {
     std::string CookieProcessor::ToString()
     {
         std::string cookieProcessorState;
-        cookieProcessorState.append("Cookies - ").append("\n");
+        cookieProcessorState.append("Cookies - ");
         for (auto& dateToCookies : m_DateToCookieInfoMap)
         {
             cookieProcessorState.append("[")
                 .append("Date : ").append(boost::gregorian::to_iso_extended_string(dateToCookies.first)).append(", ");
             for (auto& info : dateToCookies.second)
             {
-                cookieProcessorState.append("\n").append(info.ToString());
+                cookieProcessorState.append(", ").append(info.ToString());
             }
-            cookieProcessorState.append("]").append("\n");
+            cookieProcessorState.append("], ");
         }
 
         return cookieProcessorState;
